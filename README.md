@@ -1,4 +1,5 @@
 # Gitpod Workspace Dockerfile
+[![Build Status](https://travis-ci.org/KsRyY/gitpod-docker-zsh.svg?branch=master)](https://travis-ci.org/KsRyY/gitpod-docker-zsh)
 
 This Dockerfile is modified from the `gitpod-workspace-full:latest`, adapted for my own use.
 
@@ -9,10 +10,6 @@ This Dockerfile is modified from the `gitpod-workspace-full:latest`, adapted for
 ``` dockerfile
 FROM buildpack-deps:buster
 ```
-
-### Language
-
-`zh_CN.UTF8`
 
 ### Default shell
 

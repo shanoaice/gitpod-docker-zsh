@@ -33,7 +33,7 @@ RUN useradd -l -u 33333 -G sudo -md /home/gitpod -s /bin/bash -p gitpod gitpod \
 ENV HOME=/home/gitpod
 WORKDIR $HOME
 
-### C/C++ ###
+### C/C++, Apache ###
 COPY c/sources.list ${HOME}/
 RUN cat sources.list >> /etc/apt/sources.list \
     && curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add - \
@@ -45,14 +45,10 @@ RUN cat sources.list >> /etc/apt/sources.list \
         cmake \
         gdb \
         lld-9 \
-    && ln -s /usr/bin/clangd-9 /usr/bin/clangd \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
-
-### Apache and Nginx ###
-RUN apt-get update && apt-get install -yq \
         apache2 \
         nginx \
         nginx-extras \
+    && ln -s /usr/bin/clangd-9 /usr/bin/clangd \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
     && mkdir /var/run/apache2 \
     && mkdir /var/lock/apache2 \
@@ -82,7 +78,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.
         && npm install -g typescript yarn docsify-cli"
 ENV PATH=/home/gitpod/.nvm/versions/node/v${NODE_VERSION}/bin:$PATH
 
-### Python ###
+### Python, Oh My Zsh ###
 ENV PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 RUN curl -fsSL https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash \
     && { echo; \
@@ -92,18 +88,16 @@ RUN curl -fsSL https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-ins
     && pyenv global 2.7.15 \
     && pip2 install --upgrade pip \
     && pip2 install virtualenv pipenv pylint rope flake8 autopep8 pep8 pylama pydocstyle bandit python-language-server[all]==0.25.0 \
-    && rm -rf /tmp/*
+    && rm -rf /tmp/* \
+    && sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" \
+    && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions \
+    && git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search \
+    && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+COPY zsh/nox.zsh-theme /home/gitpod/.oh-my-zsh/themes/
+COPY zsh/.zshrc ${HOME}/
 # Gitpod will automatically add user site under `/workspace` to persist your packages.
 # ENV PYTHONUSERBASE=/workspace/.pip-modules \
 #    PIP_USER=yes
-
-### Oh My Zsh ###
-RUN sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" \
-&& git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions \
-&& git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search \
-&& git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-COPY zsh/nox.zsh-theme /home/gitpod/.oh-my-zsh/themes/
-COPY zsh/.zshrc ${HOME}/
 
 ### checks ###
 # no root-owned files in the home directory
