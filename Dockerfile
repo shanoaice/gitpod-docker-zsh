@@ -108,8 +108,8 @@ COPY zsh/.zshrc ${HOME}/
 ### checks ###
 # no root-owned files in the home directory
 # RUN notOwnedFile=$(find . -not "(" -user gitpod -and -group gitpod ")" -print -quit) \
-    && { [ -z "$notOwnedFile" ] \
-        || { echo "Error: not all files/dirs in $HOME are owned by 'gitpod' user & group"; exit 1; } }
+#    && { [ -z "$notOwnedFile" ] \
+#       || { echo "Error: not all files/dirs in $HOME are owned by 'gitpod' user & group"; exit 1; } }
 
 ### CMD Zsh ###
 CMD [ "/usr/bin/zsh" ]
