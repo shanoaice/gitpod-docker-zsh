@@ -2,7 +2,7 @@ FROM buildpack-deps:buster
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get update \
-    && apt-get install -y \
+    && apt-get install -yq \
         apt-utils \
         neovim \
         asciidoctor \
@@ -107,7 +107,7 @@ COPY zsh/.zshrc ${HOME}/
 
 ### checks ###
 # no root-owned files in the home directory
-RUN notOwnedFile=$(find . -not "(" -user gitpod -and -group gitpod ")" -print -quit) \
+# RUN notOwnedFile=$(find . -not "(" -user gitpod -and -group gitpod ")" -print -quit) \
     && { [ -z "$notOwnedFile" ] \
         || { echo "Error: not all files/dirs in $HOME are owned by 'gitpod' user & group"; exit 1; } }
 
