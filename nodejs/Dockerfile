@@ -19,7 +19,6 @@ RUN curl -fsSL https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-ins
 #     PIP_USER=yes
 
 ### Node.js ###
-COPY zsh/.zshrc ${HOME}/
 COPY node/n-install ${HOME}/
 ARG NODE_VERSION=12.6.0
 RUN cat n-install | bash -s -- lts latest
