@@ -1,7 +1,6 @@
 FROM buildpack-deps:buster
 
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
-    && apt-get update \
+RUN apt-get update \
     && apt-get install -yq \
         apt-utils \
         neovim \
@@ -63,47 +62,23 @@ COPY nginx /etc/nginx/
 ENV APACHE_DOCROOT_IN_REPO="public"
 ENV NGINX_DOCROOT_IN_REPO="public"
 
+### Set zsh as default shell ###
+RUN chsh gitpod -s /usr/bin/zsh
+
 ### Gitpod user (2) ###
 USER gitpod
 # use sudo so that user does not get sudo usage info on (the first) login
 RUN sudo echo "Running 'sudo' for Gitpod: success"
 
-### Node.js ###
-ARG NODE_VERSION=12.6.0
-RUN curl -fsSL https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash \
-    && bash -c ". .nvm/nvm.sh \
-        && nvm install $NODE_VERSION \
-        && npm config set python /usr/bin/python --global \
-        && npm config set python /usr/bin/python \
-        && npm install -g typescript yarn docsify-cli"
-ENV PATH=/home/gitpod/.nvm/versions/node/v${NODE_VERSION}/bin:$PATH
-
-### Python, Oh My Zsh ###
-ENV PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
-RUN curl -fsSL https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash \
-    && { echo; \
-        echo 'eval "$(pyenv init -)"'; \
-        echo 'eval "$(pyenv virtualenv-init -)"'; } >> .bashrc \
-    && pyenv install 2.7.15 \
-    && pyenv global 2.7.15 \
-    && pip2 install --upgrade pip \
-    && pip2 install virtualenv pipenv pylint rope flake8 autopep8 pep8 pylama pydocstyle bandit python-language-server[all]==0.25.0 \
-    && rm -rf /tmp/* \
-    && sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" \
+### Oh My Zsh ###
+RUN sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" \
     && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions \
     && git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search \
     && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 COPY zsh/nox.zsh-theme /home/gitpod/.oh-my-zsh/themes/
-COPY zsh/.zshrc ${HOME}/
-# Gitpod will automatically add user site under `/workspace` to persist your packages.
-# ENV PYTHONUSERBASE=/workspace/.pip-modules \
-#    PIP_USER=yes
 
 ### checks ###
 # no root-owned files in the home directory
 # RUN notOwnedFile=$(find . -not "(" -user gitpod -and -group gitpod ")" -print -quit) \
 #    && { [ -z "$notOwnedFile" ] \
 #       || { echo "Error: not all files/dirs in $HOME are owned by 'gitpod' user & group"; exit 1; } }
-
-### CMD Zsh ###
-CMD [ "/usr/bin/zsh" ]

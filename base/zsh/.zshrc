@@ -101,6 +101,3 @@ alias cls="clear"
 
 export CC=clang
 export CXX=clang++
-
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
