@@ -1,9 +1,9 @@
 # Gitpod Workspace Dockerfile
 [![Build Status](https://travis-ci.org/KsRyY/gitpod-docker-zsh.svg?branch=master)](https://travis-ci.org/KsRyY/gitpod-docker-zsh)
 
-This Dockerfile is modified from the `gitpod-workspace-full:latest`, adapted for my own use.
+This repository stores 4 Docker images.
 
-## Basic Information of this Image
+## `regularmount/gitpod-workspace-zsh:base`
 
 ### Base Image
 
@@ -23,9 +23,27 @@ FROM buildpack-deps:buster
 * git-extras
 * Clang9 C/C++ Toolchain
 * Apache
-* Nodejs 12.6.0
-* Python 2&3
 * Oh My Zsh
-* and maybe more...
 
-Check out the `Dockerfile`!
+***IMAGES BELOW IS ALL BASED ON THE IMAGE ABOVE***
+
+## `regularmount/gitpod-workspace-zsh:nodejs`
+
+The `Node.js` Image.
+
+### Contains
+
+* Everything from its base
+* Nodejs latest & LTS version
+* Python 2.7 for node-gyp
+* Yarn
+
+## `regularmount/gitpod-workspace-zsh:python`
+
+The `Python` Image
+
+### Contains
+
+* Everything from its base
+* Python 2&3
+* Pylint
