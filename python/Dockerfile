@@ -1,4 +1,4 @@
-FROM regularmount/gitpod-workspace:base
+FROM regularmount/gitpod-workspace-zsh:base
 
 ### Python ###
 ENV PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
