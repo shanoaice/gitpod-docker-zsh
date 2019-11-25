@@ -4,6 +4,7 @@
 This repository stores 4 Docker images.
 
 ## `regularmount/gitpod-workspace-zsh:base`
+![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/regularmount/gitpod-workspace-zsh/base) ![MicroBadger Size (tag)](https://img.shields.io/microbadger/image-size/regularmount/gitpod-workspace-zsh/base)
 
 ### Base Image
 
@@ -28,6 +29,7 @@ FROM buildpack-deps:buster
 ***IMAGES BELOW IS ALL BASED ON THE IMAGE ABOVE***
 
 ## `regularmount/gitpod-workspace-zsh:nodejs`
+![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/regularmount/gitpod-workspace-zsh/nodejs) ![MicroBadger Size (tag)](https://img.shields.io/microbadger/image-size/regularmount/gitpod-workspace-zsh/nodejs)
 
 The `Node.js` Image.
 
@@ -39,6 +41,7 @@ The `Node.js` Image.
 * Yarn
 
 ## `regularmount/gitpod-workspace-zsh:python`
+![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/regularmount/gitpod-workspace-zsh/python) ![MicroBadger Size (tag)](https://img.shields.io/microbadger/image-size/regularmount/gitpod-workspace-zsh/python)
 
 The `Python` Image
 
