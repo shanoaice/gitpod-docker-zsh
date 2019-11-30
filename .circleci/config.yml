@@ -18,3 +18,10 @@ jobs:
     steps:
       - checkout
       - RUN: docker build --tag python python
+workflows:
+  version: 2
+  docker:
+    jobs:
+      - base
+      - nodejs
+      - python
