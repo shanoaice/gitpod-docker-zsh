@@ -1,0 +1,20 @@
+version: 2.1
+jobs: 
+  base:
+    docker:
+      - image: docker:19.03.5
+    steps:
+      - checkout
+      - RUN: docker build --tag base base
+  nodejs:
+    docker:
+      - image: docker:19.03.5
+    steps:
+      - checkout
+      - RUN: docker build --tag nodejs nodejs
+  python:
+    docker:
+      - image: docker:19.03.5
+    steps:
+      - checkout
+      - RUN: docker build --tag python python
