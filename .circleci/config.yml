@@ -1,22 +1,28 @@
 version: 2.1
 jobs: 
   base:
-    docker:
-      - image: docker:19.03.5
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
+      - setup_remote_docker: 
+         docker_layer_caching: true 
       - run: docker build --tag base base
   nodejs:
-    docker:
-      - image: docker:19.03.5
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
+      - setup_remote_docker: 
+         docker_layer_caching: true 
       - run: docker build --tag nodejs nodejs
   python:
-    docker:
-      - image: docker:19.03.5
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
+      - setup_remote_docker: 
+         docker_layer_caching: true 
       - run: docker build --tag python python
 workflows:
   version: 2
