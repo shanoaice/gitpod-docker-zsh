@@ -33,17 +33,11 @@ ENV HOME=/home/gitpod
 WORKDIR $HOME
 
 ### C/C++, Apache ###
-COPY c/sources.list ${HOME}/
-RUN cat sources.list >> /etc/apt/sources.list \
-    && curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add - \
+RUN bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" \
     && apt-get update \
     && apt-get install -yq \
-        clang-format-9 \
-        clang-tidy-9 \
-        clang-tools-9 \
         cmake \
         gdb \
-        lld-9 \
         apache2 \
         nginx \
         nginx-extras \
