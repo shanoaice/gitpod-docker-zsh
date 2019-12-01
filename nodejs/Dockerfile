@@ -26,3 +26,5 @@ ENV N_PREFIX="$HOME/n"
 ENV N_BIN="$N_PREFIX/bin"
 ENV PATH="$N_BIN:$PATH"
 RUN npm i -g npm yarn node-gyp
+
+CMD ["zsh", "-i"]

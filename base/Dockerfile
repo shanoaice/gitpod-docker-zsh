@@ -76,3 +76,5 @@ COPY zsh/nox.zsh-theme /home/gitpod/.oh-my-zsh/themes/
 # RUN notOwnedFile=$(find . -not "(" -user gitpod -and -group gitpod ")" -print -quit) \
 #    && { [ -z "$notOwnedFile" ] \
 #       || { echo "Error: not all files/dirs in $HOME are owned by 'gitpod' user & group"; exit 1; } }
+
+CMD ["zsh", "-i"]
