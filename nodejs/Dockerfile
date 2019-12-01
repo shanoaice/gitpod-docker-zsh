@@ -25,4 +25,4 @@ RUN cat n-install | bash -s -- lts latest
 ENV N_PREFIX="$HOME/n"
 ENV N_BIN="$N_PREFIX/bin"
 ENV PATH="$N_BIN:$PATH"
-RUN npm i -g npm yarn docsify-cli node-gyp
+RUN npm i -g npm yarn node-gyp
